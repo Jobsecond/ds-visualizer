@@ -110,7 +110,7 @@ def get_visualize_units_track(track: Track) -> List[VisualizeUnit]:
             idx_ph = 0
             #current_ph_duration_balance = 0
 
-            # find the split point (in which note) of body and head notes.
+            # find the split point (in which note) of body and head phonemes.
             body_head_split_index = 0
             tmp = dur_all_bodies_in_slur_stack
             for curr_note in slur_stack:
@@ -160,7 +160,7 @@ def get_visualize_units_track(track: Track) -> List[VisualizeUnit]:
                         curr_ph_dur_remaining = 0
                         idx_ph += 1
                         continue
-                else:  # "head" notes
+                else:  # "head" phonemes
                     if idx_note == body_head_split_index:
                         use_dur = curr_note_dur_remaining
                     else:

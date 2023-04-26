@@ -19,8 +19,8 @@ These command line arguments can be used for specifying input and output files, 
 |----------------------|------------------------------------------------|----------|-----------------------------------|
 | `-i`<br />`--input`  | Path to input `.ds` file                       | Yes      | `-i /home/apple/myproject.ds`     |
 | `-o`<br />`--output` | Path to output image file (`.svg` recommended) | No       | `-o /home/apple.myproject.svg`    |
-| `--color-head`       | Color of "head" notes (e.g. consonants)        | No       | `--color-head 8c2128`             |
-| `--color-body`       | Color of "body" notes (e.g. vowels)            | No       | `--color-body d34343`             |
+| `--color-head`       | Color of "head" phonemes (e.g. consonants)     | No       | `--color-head 8c2128`             |
+| `--color-body`       | Color of "body" phonemes (e.g. vowels)         | No       | `--color-body d34343`             |
 | `--color-f0`         | Color of pitch curve                           | No       | `--color-f0 e0e0e0`               |
 | `--color-text`       | Color of texts (lyrics, phonemes)              | No       | `--color-text 000000`             |
 | `--width`            | Width of figure                                | No       | `--width 960`                     |
