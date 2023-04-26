@@ -98,8 +98,11 @@ def get_visualize_units_track(track: Track) -> List[VisualizeUnit]:
             dur_all_notes_in_slur_stack = float_sum(x.duration for x in slur_stack)
             dur_all_heads_in_slur_stack = float_sum(x.duration for x in current_phonemes
                                                     if x.category == PhonemeCategory.HEAD)
+            dur_all_bodies_in_slur_stack_ds = float_sum(x.duration for x in current_phonemes
+                                                        if x.category != PhonemeCategory.HEAD)
             dur_all_bodies_in_slur_stack = float_sum([dur_all_notes_in_slur_stack,
                                                       -dur_all_heads_in_slur_stack])
+            dur_all_bodies_in_slur_stack_delta = float_sum([dur_all_bodies_in_slur_stack, -dur_all_bodies_in_slur_stack_ds])
             #bodies_count_in_slur_stack = len([x for x in current_phonemes if x.category != PhonemeCategory.HEAD])
             #dur_bodies_balance_in_slur_stack = dur_all_bodies_in_slur_stack
             offset_cumsum = float_sum([segment.offset, slur_stack[0].offset])
@@ -142,6 +145,7 @@ def get_visualize_units_track(track: Track) -> List[VisualizeUnit]:
                         idx_note += 1
                         continue
                     else:
+                        curr_ph_dur_remaining = float_sum([curr_ph_dur_remaining, dur_all_bodies_in_slur_stack_delta])
                         visualize_unit = VisualizeUnit(text_lyric=current_text_lyric,# if not slur_stack[idx_note].is_slur else '-',
                                                        text_phoneme=current_phonemes[idx_ph].name,# if not slur_stack[idx_note].is_slur else '-',
                                                        offset=offset_cumsum,
