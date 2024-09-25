@@ -1,41 +1,41 @@
 # -*- coding: utf-8 -*-
 
 __all__ = [
-    'PhonemeCategory', 'Phoneme',
-    'Note', 'PitchCurve',
-    'Segment', 'Track',
-    'VisualizeUnit', 'Label'
+    'Phoneme',
+    'Note', 'Word', 'PitchCurve',
+    'Segment', 'Parameter', 'Retake'
 ]
 
-import enum
 from dataclasses import dataclass, field
-from typing import List, Mapping, Optional
+from typing import List, Literal, Optional
 
 import numpy as np
 
 
-class PhonemeCategory(enum.Enum):
-    BODY = enum.auto()  # usually vowel
-    HEAD = enum.auto()  # usually consonant
-    SP = enum.auto()  # silence
-    AP = enum.auto()  # aspiration
-
-
 @dataclass
 class Phoneme:
-    name: str = ''
-    duration: float = 0.0
-    category: PhonemeCategory = PhonemeCategory.SP
+    token: str = ''
+    language: str = 'zh'
+    start: float = 0.0
+    #duration: float = 0.0
 
 
 @dataclass
 class Note:
-    text: str = ''
-    phonemes: List[Phoneme] = field(default_factory=lambda: [])
+    key: int = -1
+    cents: int = 0
     duration: float = 0.0
-    offset: float = 0.0
-    midi_pitch: int = -1
-    is_slur: bool = False
+    glide: str = "none"
+    is_rest: bool = False
+    #offset: float = 0.0
+    #is_slur: bool = False
+    #text: str = ''
+
+
+@dataclass
+class Word:
+    phones: List[Phoneme] = field(default_factory=lambda: [])
+    notes: List[Note] = field(default_factory=lambda: [])
 
 
 @dataclass
@@ -53,30 +53,22 @@ class PitchCurve:
 
 
 @dataclass
+class Retake:
+    start: int = 0
+    end: int = 0
+
+
+@dataclass
+class Parameter:
+    tag: str
+    dynamic: bool
+    interval: float
+    values: List[float] = field(default_factory=lambda: [])
+    retake: Retake = field(default_factory=lambda: Retake())
+
+
+@dataclass
 class Segment:
     offset: float = 0.0
-    notes: List[Note] = field(default_factory=lambda: [])
-    pitch_curve: PitchCurve = None
-
-
-@dataclass
-class Track:
-    segments: List[Segment] = field(default_factory=lambda: [])
-    attributes: str = ""
-
-
-@dataclass
-class VisualizeUnit:
-    text_lyric: str = ''
-    text_phoneme: str = ''
-    offset: float = 0.0
-    duration: float = 0.0
-    midi_pitch: int = -1
-    category: PhonemeCategory = PhonemeCategory.SP
-
-
-@dataclass
-class Label:
-    text: str
-    x: float
-    y: float
+    words: List[Word] = field(default_factory=lambda: [])
+    parameters: List[Parameter] = field(default_factory=lambda: [])
